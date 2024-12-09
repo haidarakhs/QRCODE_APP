@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      'Hallo, Haidar',
+                      'Hallo, Haidar 👋',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
