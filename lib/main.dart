@@ -8,7 +8,7 @@ import 'package:qr_app/ui/splash_screen.dart';
 
 void main() {
   runApp(DevicePreview(
-    enabled: !kReleaseMode, 
+    enabled: true, 
     builder: (context) => const MyApp(),
   ));
 }
