@@ -1,5 +1,6 @@
 import 'dart:async'; // Impor Timer
 import 'package:flutter/material.dart';
+
 import 'home_screen.dart'; // Pastikan untuk mengimpor HomeScreen atau rute yang sesuai
 
 class SplashScreen extends StatefulWidget {
@@ -26,24 +27,24 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF553FB8),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Center(
-        child: Column(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo atau animasi
             Image.asset(
-              'assets/images/splash.png',
-              width: 200,
-              height: 200,
+              'assets/images/logo scan.png',
+              width: 90,
+              height: 90,
             ),
             const SizedBox(height: 20),
             // Teks Splash
             const Text(
               'ScannerCode',
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 50,
+                color: Color.fromARGB(255, 16, 100, 160),
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),

@@ -16,17 +16,18 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
   Color qrColor = Colors.white;
   final List<String> qrTypes = ['JPG', 'PNG', 'SVG', 'PDF'];
   String? selectedQrType;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: const Text(
-          'Create',
-          style: TextStyle(color: Colors.white),
+          'Create QR Code',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color.fromARGB(255, 77, 23, 169),
-        elevation: 0,
+        elevation: 4,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -41,8 +42,21 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
           Column(
             children: [
               Container(
-                height: 300,
-                color: const Color.fromARGB(255, 77, 23, 169),
+                height: 250,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 77, 23, 169),
+                      Colors.purple.shade800,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
+                  ),
+                ),
               ),
               Expanded(
                 child: Container(
@@ -52,7 +66,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 50),
+            padding: const EdgeInsets.only(top: 60),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -67,7 +81,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
+                          blurRadius: 15,
                           offset: const Offset(0, 5),
                         ),
                       ],
@@ -77,14 +91,15 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                         Screenshot(
                           controller: screenshotController,
                           child: Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(15),
                             decoration: qrRawValue == null
                                 ? null
                                 : BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(16),
                                     border: Border.all(
-                                        color: Colors.black, width: 4),
+                                        color: Colors.black.withOpacity(0.1),
+                                        width: 2),
                                   ),
                             child: qrRawValue == null
                                 ? const Text(
@@ -96,33 +111,37 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                                     ),
                                   )
                                 : Container(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(15),
                                     decoration: BoxDecoration(
                                       color: qrColor,
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(16),
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Colors.black26,
-                                          blurRadius: 10,
+                                          blurRadius: 15,
                                           offset: Offset(0, 4),
                                         ),
                                       ],
                                     ),
                                     child: PrettyQr(
                                       data: qrRawValue!,
-                                      size: 150,
+                                      size: 180,
                                       roundEdges: true,
                                       elementColor: Colors.black,
                                     ),
                                   ),
                           ),
                         ),
-                        const SizedBox(height: 25),
+                        const SizedBox(height: 30),
                         TextField(
                           decoration: const InputDecoration(
-                            labelText: "Link",
-                            hintText: "Insert link here...",
+                            labelText: "Insert Link",
+                            hintText: "Enter URL or Text",
                             border: OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.deepPurple),
+                            ),
                           ),
                           onChanged: (value) {
                             setState(() {
@@ -130,38 +149,28 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                             });
                           },
                         ),
-                        const SizedBox(height: 20),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxHeight: 56),
-                          child: DropdownButtonHideUnderline(
-                            child: InputDecorator(
-                              decoration: const InputDecoration(
-                                labelText: "QR Code Type",
-                                border: OutlineInputBorder(),
-                              ),
-                              child: DropdownButton<String>(
-                                value: selectedQrType,
-                                hint: const Text('Select QR Code Type'),
-                                isExpanded: true,
-                                isDense: true,
-                                items: qrTypes.map((type) {
-                                  return DropdownMenuItem<String>(
-                                    value: type,
-                                    child: Text(type),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    selectedQrType = value;
-                                  });
-                                },
-                              ),
-                            ),
+                        const SizedBox(height: 25),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
+                            value: selectedQrType,
+                            hint: const Text('Select QR Code Type'),
+                            isExpanded: true,
+                            items: qrTypes.map((type) {
+                              return DropdownMenuItem<String>(
+                                value: type,
+                                child: Text(type),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedQrType = value;
+                              });
+                            },
                           ),
                         ),
-                        const SizedBox(height: 30),
+                        const SizedBox(height: 25),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             for (var color in [
                               Colors.grey,
@@ -179,17 +188,17 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                                 },
                                 child: Container(
                                   margin:
-                                      const EdgeInsets.symmetric(horizontal: 2),
-                                  width: 20,
-                                  height: 20,
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  width: 30,
+                                  height: 30,
                                   decoration: BoxDecoration(
                                     color: color,
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(5),
+                                    shape: BoxShape.circle,
                                     border: Border.all(
                                       color: qrColor == color
                                           ? Colors.white
                                           : Colors.transparent,
+                                      width: 3,
                                     ),
                                   ),
                                 ),
@@ -199,7 +208,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                         const SizedBox(height: 30),
                         Container(
                           width: double.infinity,
-                          color: Colors.grey.shade300,
+                          color: Colors.grey.shade200,
                           height: 1,
                         ),
                         Row(
@@ -225,7 +234,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                             ),
                             Container(
                               width: 1,
-                              color: Colors.grey.shade300,
+                              color: Colors.grey.shade200,
                               height: 50,
                             ),
                             Expanded(
@@ -248,7 +257,7 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
@@ -259,15 +268,15 @@ class _QrGeneratorScreenState extends State<QrGeneratorScreen> {
   }
 
   Future<void> _shareQrCode() async {
-    // ambil screenshot dari QR
+    // Capture screenshot of the QR
     final image = await screenshotController.capture();
     if (image != null) {
-      // kalau berhasil ambil gambar, share menggunakan Share Plus
+      // If capture is successful, share the QR code image
       await Share.shareXFiles([
         XFile.fromData(
           image,
-          name: "qr_code.png", // nama file screenshot
-          mimeType: "image/png", // format file
+          name: "qr_code.png",
+          mimeType: "image/png",
         ),
       ]);
     }

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  // List<String, String>
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,105 +16,132 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('assets/images/profile-pict.png'),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'Hallo, Haidar 👋',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: AssetImage('assets/images/profile-pict.png'),
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hallo, Haidar 👋',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                      'Front-End Developer',
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                )
-              ],
+                      const SizedBox(height: 5),
+                      Text(
+                        'Front-End Developer',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome to',
-                  style: TextStyle(fontSize: 20),
+            const SizedBox(height: 30),
+
+            // Welcome Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Welcome to',
+                style: TextStyle(fontSize: 18, color: Colors.black54),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'ScannerCode',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
                 ),
-                Text(
-                  'QR SCANNER ',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                )
-              ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-              child: GridView.count(
-            crossAxisCount: 2,
-            children: [
-              BuildButton(
+            const SizedBox(height: 30),
+
+            // Button Grid
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'What would you like to do?',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Grid of Action Buttons
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              padding: const EdgeInsets.all(20),
+              childAspectRatio: 1.1, // Slightly rectangular buttons
+              children: [
+                BuildButton(
                   icon: Icons.qr_code,
                   label: 'Create',
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.blueAccent,
                   iconColor: Colors.white,
                   onTap: () {
                     Navigator.pushNamed(context, '/create');
-                  }),
-              BuildButton(
+                  },
+                ),
+                BuildButton(
                   icon: Icons.qr_code_scanner,
                   label: 'Scan',
-                  backgroundColor: Colors.red.withOpacity(0.5),
+                  backgroundColor: Colors.redAccent.withOpacity(0.6),
                   iconColor: Colors.white,
                   onTap: () {
-                     Navigator.pushNamed(context, '/scan');
-                  }),
-              BuildButton(
+                    Navigator.pushNamed(context, '/scan');
+                  },
+                ),
+                BuildButton(
                   icon: Icons.send,
                   label: 'Send',
-                  backgroundColor: Colors.green.withOpacity(0.4),
+                  backgroundColor: Colors.greenAccent.withOpacity(0.5),
                   iconColor: Colors.white,
-                  onTap: () {}),
-              BuildButton(
+                  onTap: () {},
+                ),
+                BuildButton(
                   icon: Icons.print,
                   label: 'Print',
-                  backgroundColor: Colors.purple.withOpacity(0.3),
+                  backgroundColor: Colors.purpleAccent.withOpacity(0.4),
                   iconColor: Colors.white,
-                  onTap: () {})
-            ],
-          ))
-        ],
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-// iconn
+// Button Widget
 class BuildButton extends StatelessWidget {
   const BuildButton({
     super.key,
@@ -138,16 +163,16 @@ class BuildButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 170, // Lebar tetap untuk setiap tombol
-        height: 170, // Tinggi tetap untuk setiap tombol
+        width: 150, // Slightly narrower button width
+        height: 150,
         decoration: BoxDecoration(
-          // color: Colors.white, // Latar tombol abu-abu terang
-          borderRadius: BorderRadius.circular(20), // Sudut membulat
+          color: Colors.white, // Background color of the button
+          borderRadius: BorderRadius.circular(16), // Slightly rounded corners
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05), // Bayangan lembut
-              blurRadius: 15,
-              offset: const Offset(0, 5),
+              color: Colors.black.withOpacity(0.1), // Softer shadow
+              blurRadius: 12,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -156,23 +181,23 @@ class BuildButton extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: backgroundColor, // Warna latar ikon
-                borderRadius: BorderRadius.circular(12), // Sudut membulat ikon
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.all(35),
+              padding: const EdgeInsets.all(30), // Adjusted for better spacing
               child: Icon(
                 icon,
-                color: iconColor, // Warna ikon
-                size: 40, // Ukuran ikon lebih besar
+                color: iconColor,
+                size: 45, // Slightly bigger icon
               ),
             ),
-            const SizedBox(height: 15), // Jarak antara ikon dan teks
+            const SizedBox(height: 10),
             Text(
               label,
               style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16, // Ukuran teks
               ),
             ),
           ],
